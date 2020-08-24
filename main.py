@@ -11,13 +11,23 @@ class Bullet:
     def update_type(self, bullet_type):
         self.bullet_type = bullet_type
 
-    def is_important(self, important):
+    def update_important(self, important):
         self.important = important
 
+    def is_important(self):
+        if self.important:
+            return "*"
+        return " "
+
+    def __str__(self):
+        if self.bullet_type in ["task", "event", "fact"]:
+            return self.is_important() + " " + self.bullet_type + ": " + self.content
+                    
 
 #DAILY ENTRY OBJECT
 class DailySpread:
-
+    title = "Daily Spread"
+    
     def __init__(self):
         self.bullets = []
         self.text = ""
@@ -28,6 +38,12 @@ class DailySpread:
     def add_text(self, text):
         self.text = text
 
+    def __str__(self):
+        bullets_str = ""
+        for i in self.bullets:
+            bullets_str += (str(i) + "\n")
+            
+        return bullets_str + " " + self.text
 
 #WEEKLY SPREAD OBJECT
 
@@ -47,11 +63,19 @@ class BuJo:
     def __init__(self):
         self.DailySpread = DailySpread()
         self.MonthSpread = MonthSpread()
+
+    def
+    
+    def __str__(self):
+        return str(DailySpread)
 #MAIN
 def main():
     myBuJo = BuJo()
-    myBuJo.DailySpread.add_bullet("test_bullet")
-    print(myBuJo.DailySpread.bullets)
+    myBuJo.DailySpread.add_bullet(Bullet("task", "finish BuJo Project", True))
+    myBuJo.DailySpread.add_bullet(Bullet("event", "got print working", False))
+
+    myBuJo.DailySpread.add_text("sample text times 1 billion")
+    print(str(myBuJo.DailySpread))
 
 if __name__ == '__main__':
     main()
