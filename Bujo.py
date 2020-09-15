@@ -4,6 +4,7 @@ import calendar
 class Bullet:
 
     def __init__(self, bullet_type, content, important):
+        #initialize bullet type content and importance
         self.bullet_type = bullet_type
         self.content = content
         self.important = important
@@ -17,14 +18,14 @@ class Bullet:
     def update_important(self, important):
         self.important = important
 
-    def is_important(self):
+    def is_important_str(self):
         if self.important:
             return "*"
         return " "
 
     def __str__(self):
         if self.bullet_type in ["task", "event", "fact"]:
-            return self.is_important() + " " + self.bullet_type + ": " + self.content
+            return self.is_important_str() + " " + self.bullet_type + ": " + self.content
                     
 
 #DAILY ENTRY OBJECT
@@ -32,6 +33,7 @@ class DailySpread:
     title = "Daily Spread"
     
     def __init__(self):
+        #initialize the list of bullets and the text
         self.bullets = []
         self.text = ""
 
@@ -48,11 +50,6 @@ class DailySpread:
             
         return bullets_str + " " + self.text
 
-#WEEKLY SPREAD OBJECT
-
-#MONTHLY SPREAD OBJECT
-    #SHOULD USE:
-    #HABITS OBJECT
 class Habit:
     
     def __init__(self, name, year, month):
@@ -77,15 +74,16 @@ class MonthSpread:
     
     
     def __init__(self, habits=[], calendar=calendar.TextCalendar()):
+        #initialize habits, calendar, and the current day
         self.habits = habits
         self.calendar = calendar
         self.today = date.today()
 
+        #get the year, month, and day
         self.year = self.today.year
         self.month = self.today.month
         self.day = self.today.day
 
-        
 
     def add_habit(self, name):
         self.habits.append(Habit(name, self.year, self.month))
@@ -105,30 +103,33 @@ class BuJo:
 
     #initialize daily and monthly spread pages
     def __init__(self):
+        #initialize the monthly and daily spreads
         self.DailySpread = DailySpread()
         self.MonthSpread = MonthSpread()
 
     
     #Add new bullet to daily spread
     def add_bullet(self):
-        #Prompt user for info regarding adding bullets to DAILY SPREAD
+
+        #Prompt user for info regarding adding bullets to DAILY SPREAD -- THIS WILL LIKELY CHANGE WHEN GUI GETS ADDED
         bullet_type = None
         while bullet_type not in ["task", "event", "fact"]:
             bullet_type = input("Type (task, event, fact): ").lower()
 
+        #get bullet text
         bullet_text = input("Enter bullet text: ")
 
         bullet_important = None
         while bullet_important not in ["y", "n"]:
             bullet_important = input("Is important (y/n)? ").lower()
-
+        
         if bullet_important == "y":
             bullet_important = True
         else:
             bullet_important = False
 
+        #add new bullet to daily spread bullet list
         bullet = Bullet(bullet_type, bullet_text, bullet_important)
-
         self.DailySpread.add_bullet(bullet)
 
     def add_habit(self):
@@ -144,22 +145,23 @@ class BuJo:
         return  str(self.MonthSpread) + str(self.DailySpread)
     
 #MAIN
-def main():
-    today = str(date.today())
-    
-    
-    myBuJo = BuJo()
-
-    name = "boof"
-    myBuJo.add_bullet()
-    myBuJo.add_habit()
-    myBuJo.update_habit(name)
+##def main():
+##    today = str(date.today())
+##    
+##    
+##    myBuJo = BuJo()
+##
+##    
 ##    myBuJo.add_bullet()
-
-    
-    print(str(myBuJo))
-
-if __name__ == '__main__':
-    main()
+##    myBuJo.add_habit()
+##    name = input("Update which habit? ")
+##    myBuJo.update_habit(name)
+####    myBuJo.add_bullet()
+##
+##    
+##    print(str(myBuJo))
+##
+##if __name__ == '__main__':
+##    main()
 
 
